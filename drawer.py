@@ -76,11 +76,14 @@ def print_output_opt(init, func, method, jac=None, grid=np.array([-6, 6])):
     print(f"Result Minimum: {res.fun}")
     plot(func, res, grid, method)
 
-def print_output_new(init, gd, func, label="newton_method", grid=np.array([-6, 6])):
+def print_output_new(init, gd, func, label="newton_method", grid=np.array([-6, 6]), is_bfgs=False):
     global is_opt
     is_opt = False
 
-    res, func_min, iter_count, grad_count, hess_count = newton_method(init, gd=gd, f=func)
+    if is_bfgs:
+        res, func_min, iter_count, grad_count, hess_count = bfgs_method(init, gd=gd, f=func, backtrack=True)
+    else:
+        res, func_min, iter_count, grad_count, hess_count = newton_method(init, gd=gd, f=func)
 
     print()
     print(label)
